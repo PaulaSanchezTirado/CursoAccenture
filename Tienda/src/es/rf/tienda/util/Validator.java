@@ -55,7 +55,7 @@ public class Validator {
 	// A partir de aquí las variables son propias
 	
 	private final static String FORMATO_FECHA= "dd/MM/yyyy";
-	private final static String PRODUCT_PATTERN = "^[0-9a-zA-Z]+${0,5}";
+	private final static String PRODUCT_PATTERN = "^[A-Z]{2}[0-9]{3}$";
 
 	/* ***************************************************************************************
 	 * NOMBRE: isAlfanumeric                                                                 *
@@ -301,5 +301,23 @@ public class Validator {
 	 */
 	public static boolean esPasswordValida(String password){
 		return !isVacio(password) && password.matches(PASSWORD_PATTERN);
+	}
+	
+	/* ***************************************************************************************
+	 * NOMBRE: codigoProductoValido                                                                 *
+	 * 
+	 * DESCRIPCIÓN: *//**
+	 * 		Comprobar que el código del producto es válido
+	 * 
+	 * @param texto String con el texto a comprobar
+	 * 
+	 * @return true, si cumple con las especificaciones
+	 * FECHA: Enero 2023 
+	 * AUTOR: Paula Sánchez 
+	 * 
+	 * **************************************************************************************/
+	
+	public static boolean codigoProductoValido(String codigo) {
+		return !isVacio(codigo) && codigo.matches(PRODUCT_PATTERN);
 	}
 }
