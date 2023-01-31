@@ -4,17 +4,38 @@ import java.util.Scanner;
 
 public class AdivinaContraMaquina {
 	
-	static int miNumeroIntroducido;
-	static int random;
+	static String elegir;
+	static int limitInferior = 0;
+	static int limitSuperior = 1000;
 	static int numeroIntroducidoMaquina;
-	static boolean finJuego;
+	static int numeroMaquina;
+	static int miNumeroIntroducido;
+	static boolean finMiJuego = false;
+	static boolean finMaquinaJuego = false;
 	
 	public static void main(String[] args) {
 		
-		while(!finJuego) {
-			adivinaMaquina();
-			if(!finJuego) {
-				adivinoYo();
+		Scanner teclado = new Scanner(System.in);
+		
+		while(!finMiJuego && !finMaquinaJuego) {
+			
+			numeroIntroducidoMaquina = (int) (Math.random()*1000)+1;
+			numeroMaquina = (int) (Math.random()*1000)+1;
+			
+			while (!finMaquinaJuego) {	
+				
+				System.out.println("Está jugando la máquina. El número que ha introducido la máquina es: "+numeroIntroducidoMaquina+
+						"\nElige: (M)ayor (m)enor (F)in");
+				elegir = teclado.next();
+				adivinaMaquina();
+				
+				if(!finMiJuego && !finMaquinaJuego) {
+					
+					System.out.println("Estás jugando tú. Introduce un número");
+					miNumeroIntroducido = teclado.nextInt();
+					adivinoYo();
+					
+				}
 			}
 		}
 		
@@ -22,46 +43,49 @@ public class AdivinaContraMaquina {
 	
 	public static void adivinaMaquina() {
 		
-		random = (int) (Math.random()*100); //Mi random
-		numeroIntroducidoMaquina = (int) (Math.random()*100);//El número random que proporciona la máquina
 		
-		//Scanner teclado = new Scanner(System.in);
+		if (elegir.equals("M")) {
+			
+			limitInferior = numeroIntroducidoMaquina + 1;
 		
-		System.out.println("Mi número es: "+random);
-		
-		if(numeroIntroducidoMaquina<random) {
-			System.out.println("Mi número es mayor");
 		}
 		
-		else {
-			System.out.println("Mi número es menor");
+		else if (elegir.equals("m")){
+			
+			limitSuperior = numeroIntroducidoMaquina - 1;
+		
+		}
 
-		}
+		numeroIntroducidoMaquina = (limitSuperior+limitInferior)/2; 
 		
+		if (elegir.equals("F")){
+			
+			finMaquinaJuego = true;
+			System.out.println("La maquina ha adivinado el número.");
+		
+		}
 	}
 	
 	public static void adivinoYo() {
 		
-		Scanner teclado = new Scanner(System.in);
-		
-		System.out.println("Introduce un número: ");
-		miNumeroIntroducido = teclado.nextInt(); 
-		teclado.nextLine();
-		
-		if(miNumeroIntroducido<random) {
-			System.out.println("Mayor");
-			System.out.println("Introduce un número: ");
-			miNumeroIntroducido = teclado.nextInt(); 
-			teclado.nextLine();
+		if(miNumeroIntroducido<numeroMaquina) {
+			
+			System.out.println("El número a adivinar es mayor");
+			
 		}
+		else if (miNumeroIntroducido>numeroMaquina) {
+			
+			System.out.println("El número a adivinar es menor");
+		
+		}
+		
 		else {
-			System.out.println("Menor");
-			System.out.println("Introduce un número: ");
-			miNumeroIntroducido = teclado.nextInt(); 
-			teclado.nextLine();
+			
+			finMiJuego = true;
+			System.out.println("¡Enhorabuena! Has acertado el número. El número correcto es: "+numeroMaquina);
+		
 		}
 		
-		System.out.println("¡Enhorabuena! Has acertado el número. El número correcto es: "+random);
 	}
 
 }
