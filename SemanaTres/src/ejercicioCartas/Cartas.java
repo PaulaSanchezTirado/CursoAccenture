@@ -1,5 +1,11 @@
 package ejercicioCartas;
 
+/**
+ * Juego de Póker
+ * @author paula.sanchez.tirado
+ *
+ */
+
 public class Cartas {
 		
 	int numero;

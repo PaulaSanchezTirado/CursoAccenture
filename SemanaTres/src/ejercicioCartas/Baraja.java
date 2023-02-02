@@ -1,5 +1,9 @@
 package ejercicioCartas;
 
+/**
+ * Juego de Póker
+ */
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +21,7 @@ public class Baraja {
 		
 		String[] palos;
 		
+		// Elegimos la baraja con la que se va a jugar
 		if (eleccionBaraja.equals(POKER)) {
 			palos = PALOS_POKER;
 		}
@@ -26,11 +31,11 @@ public class Baraja {
 		}
 		
 		for (String palo:palos) {
-			for (int i=1;i<13;i++) {
+			for (int i=1;i<15;i++) {
 				Cartas carta = new Cartas();
-				carta.setNumero(i);
-				carta.setPalo(palo);
-				baraja.add(carta);
+				carta.setNumero(i); // Se añade el número
+				carta.setPalo(palo); // Se añade el palo
+				baraja.add(carta); // Añadimos a la baraja la carta
 			
 			}
 		}

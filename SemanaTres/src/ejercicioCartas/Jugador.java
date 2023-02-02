@@ -1,5 +1,9 @@
 package ejercicioCartas;
 
+/**
+ * Juego de Póker
+ */
+
 import java.util.Set;
 import java.util.HashSet;
 
@@ -7,17 +11,18 @@ public class Jugador {
 	
 	private String nombre;
 	private int edad;
-	private Set<Cartas> mano;
+	private Set<Cartas> mano = new HashSet<>();
 	
+	// Constructores
 	public Jugador() {
-		mano = new HashSet<>();
 	}
 	
 	public Jugador(String nombre, int edad) {
 		this.nombre = nombre;
-		this.edad = edad;
+		this.edad = edad;	
 	}
-
+	
+	// Getters y setters
 	public String getNombre() {
 		return nombre;
 	}
@@ -42,9 +47,12 @@ public class Jugador {
 		this.mano = mano;
 	}
 	
-	@Override
-	public String toString() {
-		return "Jugador [nombre=" + nombre + ", edad=" + edad + ", mano=" + mano + "]";
+	public void setCarta(Cartas carta) {
+		mano.add(carta);
 	}
 	
+	@Override
+	public String toString() {
+		return "Jugador: " + nombre + ". Edad: " + edad + " Mano:\n" + mano;
+	}
 }
