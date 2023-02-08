@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
-@SpringBootApplication(scanBasePackages="es.rf.tienda")//(exclude = {DataSourceAutoConfiguration.class}) // Permite ver qué errores da
+@SpringBootApplication
 public class S4TiendaSpringApplication {
 
 	public static void main(String[] args) {

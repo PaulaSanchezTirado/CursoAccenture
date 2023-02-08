@@ -20,7 +20,7 @@ public class Categoria {
 	private int id_categoria;			//identificador categoria
 	@Column(nullable=false)
 	private String cat_nombre;			//nombre de la categoria
-	@Column
+	@Column(nullable=false)
 	private String cat_descripcion;		//descripcion de la categoria
 	
 	

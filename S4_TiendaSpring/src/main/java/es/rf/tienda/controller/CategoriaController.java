@@ -21,13 +21,6 @@ import es.rf.tienda.dominio.Categoria;
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaController{
-	/*
-	private es.rf.tienda.objetos.repository.ICategoriaRepo cDao;
-
-	public CategoriaController(ICategoriaRepo cDao) {
-        this.cDao = cDao;
-    }
-    */
 	
 	@Autowired
 	private ICategoriaRepo cDao;
@@ -47,17 +40,12 @@ public class CategoriaController{
 	public List<Categoria> leerTodos(){
 		return cDao.findAll();
 	}
-	
+
 	@PostMapping
-	public String[] alta(@RequestBody Categoria c) {
+	public String[] insertar(@RequestBody Categoria c) {
 		c.setId_categoria(0);
-		if (c.isValid()) {
-			cDao.save(c);
-			return new String[] {"200", "Registro guardado"};
-		}
-		else {
-			return new String[] {"500", "Registro no guardado"};
-		}
+		cDao.save(c);
+		return new String[] {"200", "Registro guardado"};
 	}
 	
 	@PutMapping
