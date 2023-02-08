@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  * ******************************************************************************************/
 public class Validator {
 	
-	private static final String ALFANUMERIC_PATTERN = "^[0-9a-zA-Z]+$";
+	private static final String ALFANUMERIC_PATTERN = "^[0-9a-zA-Z \\áéíóú.,;]+$";
 	
 	private static final String PASSWORD_PATTERN = 
             "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
@@ -258,7 +258,7 @@ public class Validator {
 	 */
 	
 	public static boolean valDateMin(LocalDate fecha, LocalDate min){
-		return fecha.isAfter(min);
+		return fecha.isAfter(min) || fecha==min;
 		
 	}
 	
@@ -269,7 +269,18 @@ public class Validator {
 	 * @return
 	 */
 	public static boolean valDateMax(LocalDate fecha, LocalDate max){
-		return fecha.isBefore(max);
+		return fecha.isBefore(max) || fecha==max;
+		
+	}	
+	
+	/**
+	 * Valida una fecha calendar para que sea la misma fecha que la actual
+	 * @param fecha
+	 * @param max
+	 * @return
+	 */
+	public static boolean valDateEqual(LocalDate fecha, LocalDate hoy){
+		return fecha==hoy;
 		
 	}	
 	

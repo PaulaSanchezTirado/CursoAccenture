@@ -62,12 +62,12 @@ public class ValidatorTest {
 	final String DNI_INVALIDO3 = "77.391.895-A";
 	final String DNI_INVALIDO4 = "";
 	
-	final String ALFANUMERICO1 = "23456";
-	final String ALFANUMERICO2 = "srttf4";
-	final String ALFANUMERICO3 = "fjturi";
+	final String ALFANUMERICO1 = "2345.6";
+	final String ALFANUMERICO2 = "srt tf4";
+	final String ALFANUMERICO3 = "fjtúri";
 	final String ALFANUMERICO4 = "{{{";
 	final String ALFANUMERICO5 = "--f";
-	final String ALFANUMERICO6 = ".6";
+	final String ALFANUMERICO6 = "¿6";
 	final String ALFANUMERICO7 = "";
 	
 	final String CORREO1 = "texto1@texto2.es";
@@ -250,6 +250,7 @@ public class ValidatorTest {
 	@Test
 	public void testValDateMinCorrecto() {
 		assertTrue(Validator.valDateMin(FECHA1, FECHA2));
+		assertTrue(Validator.valDateMin(FECHA3, FECHA3));
 	}
 	
 	/**
@@ -258,7 +259,6 @@ public class ValidatorTest {
 	@Test
 	public void testValDateMinIncorrecto() {
 		assertFalse(Validator.valDateMin(FECHA2, FECHA1));
-		assertFalse(Validator.valDateMin(FECHA3, FECHA3));
 	}
 	
 	
@@ -269,6 +269,7 @@ public class ValidatorTest {
 	@Test
 	public void testValDateMaxCorrecto() {
 		assertTrue(Validator.valDateMax(FECHA2, FECHA1));
+		assertTrue(Validator.valDateMin(FECHA3, FECHA3));
 	}
 	
 	/**
@@ -277,7 +278,6 @@ public class ValidatorTest {
 	@Test
 	public void testValDateMaxIncorrecto() {
 		assertFalse(Validator.valDateMax(FECHA1, FECHA2));
-		assertFalse(Validator.valDateMax(FECHA3, FECHA3));
 	}
 	
 	/**
