@@ -2,6 +2,8 @@ package es.rf.tienda.dominio;
 
 import java.time.LocalDate;
 
+import es.rf.tienda.exception.DomainException;
+import es.rf.tienda.util.ErrorMessages;
 import es.rf.tienda.util.Validator;
 
 /**
@@ -47,17 +49,12 @@ public class Usuario {
 		return user_nombre;
 	}
 	
-	public void setUser_nombre(String user_nombre) {
+	public void setUser_nombre(String user_nombre) throws DomainException {
 		if (Validator.cumpleLongitud(user_nombre, LIM_MIN_USER_NOMBRE, LIM_MAX_USER_NOMBRE)) {
-			if (Validator.isAlfanumeric(user_nombre)) {
-				this.user_nombre = user_nombre;
-			}
-			else {
-				System.out.println("Excepción alfanumérico");
-			}
+			this.user_nombre = user_nombre;
 		}
 		else {
-			System.out.println("Excepción longitud");
+			throw new DomainException(ErrorMessages.USERR_001);
 		}
 	}
 	
@@ -65,17 +62,12 @@ public class Usuario {
 		return user_email;
 	}
 	
-	public void setUser_email(String user_email) {
-		if (Validator.cumpleLongitud(user_email, LIM_MIN_USER_NOMBRE, LIM_MAX_USER_NOMBRE)) {
-			if (Validator.isEmailValido(user_email)) {
+	public void setUser_email(String user_email) throws DomainException {
+		if (Validator.isEmailValido(user_email)) {
 				this.user_email = user_email;
-			}
-			else {
-				System.out.println("Excepción pattern email");
-			}
 		}
 		else {
-			System.out.println("Excepción longitud");
+			throw new DomainException(ErrorMessages.USERR_002);
 		}	
 	}
 	
@@ -83,12 +75,12 @@ public class Usuario {
 		return user_pass;
 	}
 	
-	public void setUser_pass(String user_pass) {
+	public void setUser_pass(String user_pass) throws DomainException {
 		if (Validator.esPasswordValida(user_pass)) {
 			this.user_pass = user_pass;
 		}
 		else {
-			System.out.println("Excepción contraseña");
+			throw new DomainException(ErrorMessages.USERR_003);
 		}
 	}
 	
@@ -104,12 +96,12 @@ public class Usuario {
 		return user_dni;
 	}
 	
-	public void setUser_dni(String user_dni) {
+	public void setUser_dni(String user_dni) throws DomainException {
 		if (Validator.cumpleDNI(user_dni)) {
 			this.user_dni = user_dni;
 		}
 		else {
-			System.out.println("Excepción dni");
+			throw new DomainException(ErrorMessages.USERR_004);
 		}
 	}
 	
@@ -117,12 +109,12 @@ public class Usuario {
 		return user_fecAlta;
 	}
 	
-	public void setUser_fecAlta(LocalDate user_fecAlta) {
+	public void setUser_fecAlta(LocalDate user_fecAlta) throws DomainException {
 		if (Validator.valDateEqual(user_fecAlta, HOY)){
 			this.user_fecAlta = user_fecAlta;
 		}
 		else {
-			System.out.println("Excepción no es fecha igual");
+			throw new DomainException(ErrorMessages.USERR_005);
 		}
 	}
 	
@@ -130,12 +122,12 @@ public class Usuario {
 		return user_fecConfirmacion;
 	}
 	
-	public void setUser_fecConfirmacion(LocalDate user_fecConfirmacion) {
+	public void setUser_fecConfirmacion(LocalDate user_fecConfirmacion) throws DomainException {
 		if (Validator.valDateEqual(user_fecConfirmacion, HOY)){
 			this.user_fecConfirmacion = user_fecConfirmacion;
 		}
 		else {
-			System.out.println("Excepción no es fecha igual");
+			throw new DomainException(ErrorMessages.USERR_006);
 		}
 	}
 	

@@ -14,7 +14,6 @@ import es.rf.tienda.exception.DomainException;
  *
  */
 
-// FALTA CREAR EXCEPCIONES PARA NO HACER SYSO
 public class Producto {
 	
 	private String id_producto;

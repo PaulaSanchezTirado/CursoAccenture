@@ -2,6 +2,8 @@ package es.rf.tienda.dominio;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import es.rf.tienda.util.Validator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +18,7 @@ import jakarta.persistence.Transient;
 public class Categoria {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private int id_categoria;			//identificador categoria
 	@Column(nullable=false)
 	private String cat_nombre;			//nombre de la categoria
@@ -27,9 +29,16 @@ public class Categoria {
 	public Categoria(){}
 	
 	@Transient
-	public boolean isValid(){	
+	@JsonIgnore
+	public boolean isValidUpdate(){	
 		return !Validator.isVacio(cat_nombre) &&
 				id_categoria > 0;
+	}
+	
+	@Transient
+	@JsonIgnore
+	public boolean isValidInsert(){	
+		return !Validator.isVacio(cat_nombre);
 	}
 	
 	/**

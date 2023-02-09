@@ -1,8 +1,5 @@
 package es.rf.tienda.dominio;
 
-import es.rf.tienda.exception.DomainException;
-import es.rf.tienda.util.ErrorMessages;
-import es.rf.tienda.util.Validator;
 
 /**
  * 
@@ -12,6 +9,7 @@ import es.rf.tienda.util.Validator;
  * @version		Enero 2023
  *
  */
+
 public class Direccion {
 
 	private String dir_nombre;
@@ -21,9 +19,6 @@ public class Direccion {
 	private String dir_provincia;
 	private String dir_pais;
 	private String dir_correoE;
-	
-	private final int LONGITUD_MIN_NOMBRE = 5;
-	private final int LONGITUD_MAX_NOMBRE = 100;
 	
 	// Contructor
 	public Direccion() {
@@ -36,19 +31,8 @@ public class Direccion {
 		return dir_nombre;
 	}
 	
-	// Tiene que cumplir que la longitud se encuentre entre 5 y 100 y que el formato sea alfanumérico
-	public void setDir_nombre(String dir_nombre) throws DomainException {
-		if (Validator.isAlfanumeric(dir_nombre)) {
-			if(Validator.cumpleLongitud(dir_nombre, LONGITUD_MIN_NOMBRE, LONGITUD_MAX_NOMBRE)){
-				this.dir_nombre = dir_nombre;
-			}
-			else {
-				throw new DomainException(ErrorMessages.PROERR_003);
-			}
-		}
-		else {
-			throw new DomainException(ErrorMessages.ERR_ALFANUMERIC);
-		}
+	public void setDir_nombre(String dir_nombre){
+		this.dir_nombre = dir_nombre;
 	}
 	
 	public String getDir_direccion() {
