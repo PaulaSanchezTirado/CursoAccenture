@@ -4,6 +4,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * 
+ * Nombre		ProductoTest
+ * Descripcion	Test de la clase producto
+ * @author 		Paula Sánchez
+ * @version		Enero 2023
+ *
+ */
+
 class ProductoTest {
 	
 	// Comprobaciones getters y setters

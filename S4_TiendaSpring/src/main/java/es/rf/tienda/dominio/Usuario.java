@@ -3,8 +3,17 @@ package es.rf.tienda.dominio;
 import java.time.LocalDate;
 
 import es.rf.tienda.exception.DomainException;
-import es.rf.tienda.util.ErrorMessages;
+import es.rf.tienda.util.Messages;
 import es.rf.tienda.util.Validator;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * 
@@ -14,28 +23,56 @@ import es.rf.tienda.util.Validator;
  * @version		Enero 2023
  *
  */
-
+@Entity
+@Table(schema="ALUMNO_PST", name = "USUARIOS")
 public class Usuario {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private int id_usuario;
+	@Column(nullable=false, length = 100)
 	private String user_nombre;
+	@Column(nullable=false, length = 100)
 	private String user_email;
+	@Column(nullable=false, length = 20)
 	private String user_pass;
+	@Column(nullable=false)
 	private int user_tipo;
+	@Column(length = 12)
 	private String user_dni;
+	@Column
 	private LocalDate user_fecAlta;
+	@Column
 	private LocalDate user_fecConfirmacion;
-	
+	@Embedded
+	@AttributeOverrides({@AttributeOverride(name = "dir_nombre", column = @Column(name = "nombrePago")),
+						 @AttributeOverride(name = "dir_direccion", column = @Column(name = "direccionPago")),
+						 @AttributeOverride(name = "dir_poblacion", column = @Column(name = "poblacionPago")),
+						 @AttributeOverride(name = "dir_cPostal", column = @Column(name = "cPostalPago")),
+						 @AttributeOverride(name = "dir_provincia", column = @Column(name = "provinciaPago")),
+						 @AttributeOverride(name = "dir_correoE", column = @Column(name = "correoEPago")),
+						 @AttributeOverride(name = "dir_pais", column = @Column(name = "paisPago"))})
+	private Direccion user_pago;
+	@Embedded
+	@AttributeOverrides({@AttributeOverride(name = "dir_nombre", column = @Column(name = "nombreEnvio")),
+						 @AttributeOverride(name = "dir_direccion", column = @Column(name = "direccionEnvio")),
+						 @AttributeOverride(name = "dir_poblacion", column = @Column(name = "poblacionEnvio")),
+						 @AttributeOverride(name = "dir_cPostal", column = @Column(name = "cPostalEnvio")),
+						 @AttributeOverride(name = "dir_provincia", column = @Column(name = "provinciaEnvio")),
+						 @AttributeOverride(name = "dir_correoE", column = @Column(name = "correoEEnvio")),
+						 @AttributeOverride(name = "dir_pais", column = @Column(name = "paisEnvio"))})
+	private Direccion user_envio;
+
 	/**
 	 * Límite user_nombre
 	 */
-	private final int LIM_MIN_USER_NOMBRE = 5;
-	private final int LIM_MAX_USER_NOMBRE = 100;
+	private transient final int LIM_MIN_USER_NOMBRE = 5;
+	private transient final int LIM_MAX_USER_NOMBRE = 100;
 	
 	/**
 	 * Límite user_fecAlta
 	 */
-	private final LocalDate HOY = LocalDate.now();
+	private transient final LocalDate HOY = LocalDate.now();
 	
 	public int getId_usuario() {
 		return id_usuario;
@@ -54,7 +91,7 @@ public class Usuario {
 			this.user_nombre = user_nombre;
 		}
 		else {
-			throw new DomainException(ErrorMessages.USERR_001);
+			throw new DomainException(Messages.USERR_001);
 		}
 	}
 	
@@ -67,7 +104,7 @@ public class Usuario {
 				this.user_email = user_email;
 		}
 		else {
-			throw new DomainException(ErrorMessages.USERR_002);
+			throw new DomainException(Messages.USERR_002);
 		}	
 	}
 	
@@ -80,7 +117,7 @@ public class Usuario {
 			this.user_pass = user_pass;
 		}
 		else {
-			throw new DomainException(ErrorMessages.USERR_003);
+			throw new DomainException(Messages.USERR_003);
 		}
 	}
 	
@@ -101,7 +138,7 @@ public class Usuario {
 			this.user_dni = user_dni;
 		}
 		else {
-			throw new DomainException(ErrorMessages.USERR_004);
+			throw new DomainException(Messages.USERR_004);
 		}
 	}
 	
@@ -114,7 +151,7 @@ public class Usuario {
 			this.user_fecAlta = user_fecAlta;
 		}
 		else {
-			throw new DomainException(ErrorMessages.USERR_005);
+			throw new DomainException(Messages.USERR_005);
 		}
 	}
 	
@@ -127,8 +164,24 @@ public class Usuario {
 			this.user_fecConfirmacion = user_fecConfirmacion;
 		}
 		else {
-			throw new DomainException(ErrorMessages.USERR_006);
+			throw new DomainException(Messages.USERR_006);
 		}
+	}
+	
+	public Direccion getUser_pago() {
+		return user_pago;
+	}
+
+	public void setUser_pago(Direccion user_pago) {
+		this.user_pago = user_pago;
+	}
+
+	public Direccion getUser_envio() {
+		return user_envio;
+	}
+
+	public void setUser_envio(Direccion user_envio) {
+		this.user_envio = user_envio;
 	}
 	
 }

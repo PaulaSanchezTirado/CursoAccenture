@@ -1,42 +1,58 @@
 package es.rf.tienda.dominio;
 
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import es.rf.tienda.exception.DomainException;
+import es.rf.tienda.util.Messages;
 import es.rf.tienda.util.Validator;
+import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+
+/**
+ * 
+ * Nombre		Categorías
+ * Descripcion	Lista de categorías
+ * @author 		Paula Sánchez
+ * @version		Enero 2023
+ *
+ */
 
 @Entity
 @Table(schema = "ALUMNO_PST", name = "CATEGORIAS")
-public class Categoria {
+public class Categoria implements Modelo{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
-	private int id_categoria;			//identificador categoria
-	@Column(nullable=false)
-	private String cat_nombre;			//nombre de la categoria
-	@Column(nullable=false)
-	private String cat_descripcion;		//descripcion de la categoria
+	private int id_categoria;			 //identificador categoria
+	@Column(nullable=false, length = 50) // Para definir la tabla
+	private String cat_nombre;			 //nombre de la categoria
+	@Column(nullable=true, length = 200)
+	private String cat_descripcion;		 //descripcion de la categoria
 	
+	private transient final int LONG_MIN = 5;
+	private transient final int LONG_MAX = 50;
+	
+	private transient final int LONG_MAX_DESCRIPCION = 200;
 	
 	public Categoria(){}
 	
-	@Transient
-	@JsonIgnore
+	/**
+	 * Método para validar la modificación de una categoría no siendo el nombre vacío y con un id
+	 * superior a 0
+	 */
+	@Override
 	public boolean isValidUpdate(){	
 		return !Validator.isVacio(cat_nombre) &&
 				id_categoria > 0;
 	}
 	
-	@Transient
-	@JsonIgnore
+	/**
+	 * Método para validar la inserción de una categoría no siendo su nombre un campo vacío
+	 */
+	@Override
 	public boolean isValidInsert(){	
 		return !Validator.isVacio(cat_nombre);
 	}
@@ -66,11 +82,18 @@ public class Categoria {
 	}
 	
 	/**
-	 * Setter para el nombre de categoria
+	 * Setter para el nombre de categoria. El nombre debe estar comprendido entre 5 y 50 caracteres
+	 * @throws DomainException 
 	 * 
 	 */
-	public void setCat_nombre(String cat_nombre) {
-		this.cat_nombre = cat_nombre;
+	
+	public void setCat_nombre(String cat_nombre) throws DomainException {
+		if (Validator.cumpleLongitud(cat_nombre, LONG_MIN, LONG_MAX)) {
+			this.cat_nombre = cat_nombre;
+		}
+		else {
+			throw new DomainException(Messages.CAT_ERR001);
+		}
 	}
 	
 	/**
@@ -86,7 +109,7 @@ public class Categoria {
 	 * 
 	 */
 	public void setCat_descripcion(String cat_descripcion) {
-		this.cat_descripcion = cat_descripcion;
+		this.cat_descripcion = StringUtils.truncate(cat_descripcion, LONG_MAX_DESCRIPCION);
 	}
 
 

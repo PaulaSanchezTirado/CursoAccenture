@@ -1,5 +1,7 @@
 package es.rf.tienda.dominio;
 
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Table;
 
 /**
  * 
@@ -10,6 +12,8 @@ package es.rf.tienda.dominio;
  *
  */
 
+@Embeddable
+@Table(schema = "ALUMNO_PST", name = "DIRECCIONES")
 public class Direccion {
 
 	private String dir_nombre;

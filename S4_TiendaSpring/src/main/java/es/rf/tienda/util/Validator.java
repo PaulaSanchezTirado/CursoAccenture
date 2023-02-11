@@ -280,7 +280,7 @@ public class Validator {
 	 * @return
 	 */
 	public static boolean valDateEqual(LocalDate fecha, LocalDate hoy){
-		return fecha==hoy;
+		return fecha.isEqual(hoy);
 		
 	}	
 	

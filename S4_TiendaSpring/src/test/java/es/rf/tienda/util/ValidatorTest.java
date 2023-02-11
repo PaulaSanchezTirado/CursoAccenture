@@ -282,6 +282,22 @@ public class ValidatorTest {
 	}
 	
 	/**
+	 * Comprueba que la fecha dada es igual a la actual
+	 */
+	@Test
+	public void testValDateEqual() {
+		assertTrue(Validator.valDateEqual(FECHA3, FECHA3));
+	}
+	
+	/**
+	 * Comprueba que la fecha dada no es igual a la actual
+	 */
+	@Test
+	public void testValDateEqualIncorrecta() {
+		assertFalse(Validator.valDateEqual(FECHA3, FECHA2));
+	}
+	
+	/**
 	 * Comprueba que la fecha introducida tiene el formato correcto
 	 */
 	@Test

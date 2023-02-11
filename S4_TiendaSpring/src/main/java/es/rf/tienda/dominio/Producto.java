@@ -2,9 +2,21 @@ package es.rf.tienda.dominio;
 
 import java.time.LocalDate;
 
-import es.rf.tienda.util.ErrorMessages;
+import es.rf.tienda.util.Messages;
 import es.rf.tienda.util.Validator;
+import io.micrometer.common.util.StringUtils;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import es.rf.tienda.exception.DomainException;
+
 /**
  * 
  * Nombre		Producto
@@ -14,61 +26,83 @@ import es.rf.tienda.exception.DomainException;
  *
  */
 
+@Entity
+@Table(schema="ALUMNO_PST", name = "PRODUCTOS")
 public class Producto {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private String id_producto;
+	@Column(nullable=false, length = 100)
 	private String pro_descripcion;
+	@Column(length = 2000)
 	private String pro_desLarga;
+	@Column(nullable=false)
 	private double pro_precio; 
+	@Column
 	private int pro_stock;
+	@Column
 	private LocalDate pro_fecRepos;
+	@Column
 	private LocalDate pro_fecActi;
+	@Column
 	private LocalDate fecDesacti;
+	@Column(nullable=false, length = 10)
 	private String pro_uniVenta;
+	@Column
 	private int pro_cantXUniVenta;
+	@Column
 	private String pro_uniUltNivel;
+	@Column(nullable=false)
 	private int id_pais;
+	@Column(length = 2000)
 	private String pro_usoRecomendado;
-	private int id_categoria;
+	@ManyToOne(targetEntity = Categoria.class, cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_categoria", nullable = false)
+	private Categoria id_categoria;
+	@Column
 	private int pro_stkReservado;
+	@Column
 	private int pro_nStkAlto;
+	@Column
 	private int pro_nStkBajo;
+	@Column
 	private char pro_stat;
 	
 	/**
 	 * Límites id_producto
 	 */
-	private final int LIM_MIN_ID_PRODUCTO = 5;
-	private final int LIM_MAX_ID_PRODUCTO = 5;
+	private transient final int LIM_MIN_ID_PRODUCTO = 5;
+	private transient final int LIM_MAX_ID_PRODUCTO = 5;
 	
 	/**
 	 * Límites pro_descripcion
 	 */
-	private final int LIM_MIN_PRO_DESCRIPCION = 5;
-	private final int LIM_MAX_PRO_DESCRIPCION = 100;
+	private transient final int LIM_MIN_PRO_DESCRIPCION = 5;
+	private transient final int LIM_MAX_PRO_DESCRIPCION = 100;
 	
 	/**
 	 * Límites pro_desLarga
 	 */
-	private final int LIM_MIN_PRO_DESLARGA = 5;
-	private final int LIM_MAX_PRO_DESLARGA = 2000;
+	private transient final int LIM_MIN_PRO_DESLARGA = 5;
+	private transient final int LIM_MAX_PRO_DESLARGA = 2000;
 	
 	/**
 	 * Límites pro_precio
 	 */
-	private final int LIM_MIN_PRO_PRECIO = 0;
-	private final int LIM_MAX_PRO_PRECIO = 100;
+	private transient final int LIM_MIN_PRO_PRECIO = 0;
+	private transient final int LIM_MAX_PRO_PRECIO = 100;
 	
 	/**
 	 * Límite fecRepos y fecActi
 	 */
-	private final LocalDate HOY = LocalDate.now();
+	private transient final LocalDate HOY = LocalDate.now();
 	
 	/**
-	 * Límite fecRepos y fecActi
+	 * Longitud pro_uniVenta, pro_usoRecomendado
 	 */
-	private final int LIM_MAX_PRO_USORECOMENDADO = 2000;
-	
+	private transient final int LONG_PROUNIVENTA_MAX = 10;
+	private transient final int LONG_PROUSORECOMENDADO_MAX = 2000;
 	
 	public String getId_producto() {
 		return id_producto;
@@ -80,12 +114,12 @@ public class Producto {
 				this.id_producto = id_producto;
 			}
 			else {
-				throw new DomainException(ErrorMessages.PROERR_001);
+				throw new DomainException(Messages.PROERR_001);
 			}
 		}
 		
 		else {
-			throw new DomainException(ErrorMessages.PROERR_003);
+			throw new DomainException(Messages.PROERR_003);
 		}
 	}
 	
@@ -98,7 +132,7 @@ public class Producto {
 			this.pro_descripcion = pro_descripcion;
 		}
 		else {
-			throw new DomainException(ErrorMessages.PROERR_003);
+			throw new DomainException(Messages.PROERR_003);
 		}
 	}
 	
@@ -111,7 +145,7 @@ public class Producto {
 			this.pro_desLarga = pro_desLarga;
 		}
 		else {
-			throw new DomainException(ErrorMessages.PROERR_003);
+			throw new DomainException(Messages.PROERR_003);
 		}
 	}
 	
@@ -124,7 +158,7 @@ public class Producto {
 			this.pro_precio = pro_precio;
 		}
 		else {
-			throw new DomainException(ErrorMessages.PROERR_004);
+			throw new DomainException(Messages.PROERR_004);
 		}
 	}
 	
@@ -145,7 +179,7 @@ public class Producto {
 			this.pro_fecRepos = pro_fecRepos;
 		}
 		else {
-			throw new DomainException(ErrorMessages.PROERR_005);
+			throw new DomainException(Messages.PROERR_005);
 		}
 	}
 	
@@ -158,7 +192,7 @@ public class Producto {
 			this.pro_fecActi = pro_fecActi;
 		}
 		else {
-			throw new DomainException(ErrorMessages.PROERR_006);
+			throw new DomainException(Messages.PROERR_006);
 		}
 	}
 	
@@ -172,7 +206,7 @@ public class Producto {
 				this.fecDesacti = fecDesacti;
 			}
 			else {
-				throw new DomainException(ErrorMessages.PROERR_007);
+				throw new DomainException(Messages.PROERR_007);
 			}
 		}
 		else {
@@ -180,7 +214,7 @@ public class Producto {
 				this.fecDesacti = fecDesacti;
 			}
 			else {
-				throw new DomainException(ErrorMessages.PROERR_007);
+				throw new DomainException(Messages.PROERR_007);
 			}
 		}	
 	}
@@ -190,7 +224,7 @@ public class Producto {
 	}
 	
 	public void setPro_uniVenta(String pro_uniVenta) {
-		this.pro_uniVenta = pro_uniVenta;
+		this.pro_uniVenta = StringUtils.truncate(pro_uniVenta, LONG_PROUNIVENTA_MAX);;
 	}
 	
 	public int getPro_cantXUniVenta() {
@@ -221,20 +255,15 @@ public class Producto {
 		return pro_usoRecomendado;
 	}
 	
-	public void setPro_usoRecomendado(String pro_usoRecomendado) throws DomainException {
-		if (Validator.cumpleLongitudMax(pro_usoRecomendado, LIM_MAX_PRO_USORECOMENDADO)) {
-			this.pro_usoRecomendado = pro_usoRecomendado;
-		}
-		else {
-			throw new DomainException(ErrorMessages.PROERR_008);
-		}
+	public void setPro_usoRecomendado(String pro_usoRecomendado){
+		this.pro_usoRecomendado = StringUtils.truncate(pro_usoRecomendado, LONG_PROUSORECOMENDADO_MAX);
 	}
 	
-	public int getId_categoria() {
+	public Categoria getId_categoria() {
 		return id_categoria;
 	}
 	
-	public void setId_categoria(int id_categoria) {
+	public void setId_categoria(Categoria id_categoria) {
 		this.id_categoria = id_categoria;
 	}
 	
