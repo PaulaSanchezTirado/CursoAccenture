@@ -5,11 +5,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import es.rf.tienda.auxiliar.Mensajes;
 import es.rf.tienda.dominio.Categoria;
-import es.rf.tienda.dto.MensajesCategoria;
 import es.rf.tienda.exception.DAOException;
 import es.rf.tienda.exception.DomainException;
 import es.rf.tienda.util.Messages;
@@ -40,13 +42,13 @@ class CategoriaControllerTest {
 	private final String NOMBRE_CATEGORIA2 = "Nombre categoria";
 	private final String DESCRIPCION_CATEGORIA2 = "Descripción de categoria";
 	
-	private final MensajesCategoria MENSAJE_CORRECTO = MensajesCategoria.mensaje(Messages.CODE_200, Messages.STATUS_200, c1);
-	private final MensajesCategoria MENSAJE_CORRECTO2 = MensajesCategoria.mensaje(Messages.CODE_200, Messages.STATUS_200, c2); 
-	private final MensajesCategoria MENSAJE_CORRECTO3 = MensajesCategoria.mensajeList(Messages.CODE_200, Messages.STATUS_200, listCategoria);
-	private final MensajesCategoria MENSAJE_CORRECTO_ELIMINAR = MensajesCategoria.mensajeComun(Messages.CODE_200, Messages.REGISTRO_BORRADO);
-	private final MensajesCategoria MENSAJE_CORRECTO_PETICION = MensajesCategoria.mensajeComun(Messages.CODE_400, Messages.PETICION_ERRONEA);
-	private final MensajesCategoria MENSAJE_CORRECTO_INSERTAR = MensajesCategoria.mensajeComun(Messages.CODE_200, Messages.REGISTRO_INSERTADO);
-	private final MensajesCategoria MENSAJE_CORRECTO_MODIFICAR = MensajesCategoria.mensajeComun(Messages.CODE_200, Messages.REGISTRO_MODIFICADO);
+	private final Map<String, Object> MENSAJE_CORRECTO = Mensajes.Mensaje(Messages.CODE_200, Messages.STATUS_200, c1);
+	private final Map<String, Object> MENSAJE_CORRECTO2 = Mensajes.Mensaje(Messages.CODE_200, Messages.STATUS_200, c2); 
+	private final Map<String, Object> MENSAJE_CORRECTO3 = Mensajes.Mensaje(Messages.CODE_200, Messages.STATUS_200, listCategoria);
+	private final Map<String, Object> MENSAJE_CORRECTO_ELIMINAR = Mensajes.Mensaje(Messages.CODE_200, Messages.REGISTRO_BORRADO, null);
+	private final Map<String, Object> MENSAJE_CORRECTO_PETICION = Mensajes.Mensaje(Messages.CODE_400, Messages.PETICION_ERRONEA, null);
+	private final Map<String, Object> MENSAJE_CORRECTO_INSERTAR = Mensajes.Mensaje(Messages.CODE_200, Messages.REGISTRO_INSERTADO, null);
+	private final Map<String, Object> MENSAJE_CORRECTO_MODIFICAR = Mensajes.Mensaje(Messages.CODE_200, Messages.REGISTRO_MODIFICADO, null);
 	
 	@BeforeEach
 	void creacion() {
@@ -74,7 +76,7 @@ class CategoriaControllerTest {
 	 * Comprueba que lee bien la lista de categorías devolviendo el mensaje correspondiente
 	 */
 	@Test
-	void testLeerTodosCorrecto() {
+	void testLeerTodosCorrecto(){
 		when(cDao.leerTodos()).thenReturn(MENSAJE_CORRECTO3);
 		assertEquals(cDao.leerTodos(), MENSAJE_CORRECTO3);
 	}
