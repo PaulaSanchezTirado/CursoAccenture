@@ -67,7 +67,7 @@ public class ServicioCategoria implements IServicio<Categoria, Integer>{
 	/**
 	 * Método para borrar una categoría. Devuelve un booleano para utilizarlo en el controller
 	 */
-	public boolean deleteCategorias(Categoria c) throws DAOException {
+	public boolean delete(Categoria c) throws DAOException {
 		try {
 			deleteById(c.getId_categoria());
 			return true;

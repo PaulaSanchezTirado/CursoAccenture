@@ -28,8 +28,8 @@ public interface IServicio<T, S>{
 	public boolean insertar(T t);
 	public boolean update(T t);
 	public boolean deleteById(S s) throws DAOException;
-	public boolean deleteCategorias(T t) throws DAOException;	
-	public List<Categoria> leerTodos();
+	public boolean delete(T t) throws DAOException;	
+	public List<T> leerTodos();
 	public T leerUno(S s) throws DAOException;
 	public boolean idExist(S s) throws DAOException;
 	
